@@ -33,6 +33,9 @@ ALLOWED_HOSTS = []
 
 REST_FRAMEWORK = { 
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema', 
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    )
     }
 
 
@@ -58,6 +61,10 @@ INSTALLED_APPS = [
 
     #
     'drf_spectacular',
+    'rest_framework_simplejwt',
+
+    'authentication.apps.AuthenticationConfig',
+    'taskManager.apps.TaskmanagerConfig',
 ]
 
 MIDDLEWARE = [
