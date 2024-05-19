@@ -8,7 +8,16 @@ class ListCreateTaskView(generics.ListCreateAPIView):
     permission_classes = [permissions.IsAuthenticated] 
 
     def get_queryset(self):
-        user = self.request.user        
+        user = self.request.user
+        completed = self.request.GET.get('completed', None)
+        if completed is not None:
+            completed = str(completed).lower()
+            if completed not in ("true", 'false'):
+                raise exceptions.ValidationError("query parameter 'completed' must be 'true' or 'false'!")
+            if completed == 'true':
+                return Task.objects.filter(user=user, completed=True).order_by('-created')
+            else:
+                return Task.objects.filter(user=user, completed=False).order_by('-created')    
         return Task.objects.filter(user=user).order_by('-created')
     
 
