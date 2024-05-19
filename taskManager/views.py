@@ -10,3 +10,12 @@ class ListCreateTaskView(generics.ListCreateAPIView):
     def get_queryset(self):
         user = self.request.user        
         return Task.objects.filter(user=user).order_by('-created')
+    
+
+class RetrieveUpdateDestroyTaskView(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = serializers.UpdateTaskSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        user = self.request.user        
+        return Task.objects.filter(user=user)
