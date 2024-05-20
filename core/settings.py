@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
+import os
 from pathlib import Path
 import dj_database_url
 from dotenv import load_dotenv
@@ -24,13 +25,24 @@ load_dotenv(BASE_DIR / '.env')
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-ii1=e@(y6)xco(2n+r0cv-)l-u2$qm+iz0+-aa@w*v*2e2ppb8'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+SECRET_KEY = os.getenv('SECRET_KEY')
 
-ALLOWED_HOSTS = []
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = os.getenv('DEBUG', '0').lower() in ['true', '1']
+
+ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '').split(' ')
+
+if os.getenv('CSRF_TRUSTED_ORIGINS'):
+    CSRF_TRUSTED_ORIGINS = os.getenv('CSRF_TRUSTED_ORIGINS').split(' ')
+
+CORS_ORIGIN_ALLOW_ALL = os.getenv('CORS_ORIGIN_ALLOW_ALL', True) in (True, 'True')
+
+CORS_ALLOW_CREDENTIALS = os.getenv('CORS_ALLOW_CREDENTIALS', True) in (True, 'True')
+
+if os.getenv('CORS_ALLOWED_ORIGINS'):
+    CORS_ALLOWED_ORIGINS = os.getenv('CORS_ALLOWED_ORIGINS').split(' ')
 
 AUTH_USER_MODEL = 'authentication.User'
 
@@ -76,12 +88,14 @@ INSTALLED_APPS = [
     #
     'drf_spectacular',
     'rest_framework_simplejwt',
+    "corsheaders",
 
     'authentication.apps.AuthenticationConfig',
     'taskManager.apps.TaskmanagerConfig',
 ]
 
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
