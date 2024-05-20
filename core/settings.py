@@ -74,11 +74,29 @@ SIMPLE_JWT = {
     # "TOKEN_OBTAIN_SERIALIZER": "authentication.serializers.MyTokenObtainPairSerializer",
 }
 
+# CHANNEL_LAYERS = {
+#     'default': {
+#         'BACKEND': 'channels_redis.core.RedisChannelLayer',
+#         'CONFIG': {
+#             "hosts": [('127.0.0.1', 6379)],
+#         },
+#     },
+# }
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels.layers.InMemoryChannelLayer',
+    },
+}
+
+
+ASGI_APPLICATION = 'core.asgi.application'
+
 
 # Application definition
 
 INSTALLED_APPS = [
     # 'django.contrib.admin',
+    "daphne",
     'django.contrib.auth',
     'django.contrib.contenttypes',
     # 'django.contrib.sessions',
@@ -88,7 +106,8 @@ INSTALLED_APPS = [
     #
     'drf_spectacular',
     'rest_framework_simplejwt',
-    "corsheaders",
+    'corsheaders',
+    'channels',
 
     'authentication.apps.AuthenticationConfig',
     'taskManager.apps.TaskmanagerConfig',
