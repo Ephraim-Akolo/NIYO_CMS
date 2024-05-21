@@ -20,8 +20,8 @@ Follow the below steps to start up the server locally.
 
 ## Environmental Variables
 
-* SECRET_KEY = -3rj%4h#*r3%ebuk&pj8_=-id1m!d71d8tx*8s@0-3tz9d@672    (SECRET_KEY can be generated using `python manage.py shell -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"`)
-* DATABASE_URL = postgres://niyo_0kra_user:A8OOq21IAXMQjXmlkz1mg7hN4YzYUemG@dpg-cp57rcgcmk4c73eu3v80-a.oregon-postgres.render.com/niyo_0kra
+* SECRET_KEY = -3rj%4h#*****    (SECRET_KEY can be generated using `python manage.py shell -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"`)
+* DATABASE_URL = postgres://user:password@server/database
 
 
 **Optional environmental variables**
